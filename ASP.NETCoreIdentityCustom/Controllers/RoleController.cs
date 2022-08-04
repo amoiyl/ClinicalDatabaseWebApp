@@ -18,7 +18,7 @@ namespace ClinicalWebapp.Controllers
         }
 
         //[Authorize(Policy = "RequireAdmin")]
-        [Authorize(Roles = $"{Constants.Roles.Administrator},{Constants.Roles.Manager}")]
+        [Authorize(Roles = $"{Constants.Roles.Administrator},{Constants.Roles.Clinician}")]
         public IActionResult Admin()
         {
             return View();

@@ -73,12 +73,11 @@ namespace ClinicalWebapp.Areas.Identity.Pages.Account
         {
             [Required]
             [StringLength(255, ErrorMessage = "The first name field should have a maximum of 255 characters")]
-            [Display(Name = "Firstname")]
+            [Display(Name = "Name")]
             public string FirstName { get; set; }
 
             [Required]
-            [StringLength(255, ErrorMessage = "The last name field should have a maximum of 255 characters")]
-            [Display(Name = "Lastname")]
+            [Display(Name = "Address")]
             public string LastName { get; set; }
 
             /// <summary>

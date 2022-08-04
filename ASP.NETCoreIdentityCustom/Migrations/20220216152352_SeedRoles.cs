@@ -27,7 +27,7 @@ namespace ClinicalWebapp.Migrations
             migrationBuilder.Sql(@$"INSERT INTO [dbo].[AspNetRoles] ([Id],[Name],[NormalizedName],[ConcurrencyStamp])
             VALUES ('{AdminRoleId}', 'Administrator', 'ADMINISTRATOR', null);");
             migrationBuilder.Sql(@$"INSERT INTO [dbo].[AspNetRoles] ([Id],[Name],[NormalizedName],[ConcurrencyStamp])
-            VALUES ('{ManagerRoleId}', 'Manager', 'MANAGER', null);");
+            VALUES ('{ManagerRoleId}', 'Clinician', 'MANAGER', null);");
             migrationBuilder.Sql(@$"INSERT INTO [dbo].[AspNetRoles] ([Id],[Name],[NormalizedName],[ConcurrencyStamp])
             VALUES ('{UserRoleId}', 'User', 'USER', null);");
         }
