@@ -11,7 +11,7 @@ namespace ClinicalWebapp.Controllers
             return View();
         }
 
-        [Authorize(Policy = Constants.Policies.RequireManager)]
+        [Authorize(Roles = "Administrator,Clinician")]
         public IActionResult Manager()
         {
             return View();
