@@ -56,11 +56,6 @@ void AddAuthorizationPolicies()
 {
     builder.Services.AddAuthorization(options =>
     {
-        options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
-    });
-
-    builder.Services.AddAuthorization(options =>
-    {
         options.AddPolicy(Constants.Policies.RequireAdmin, policy => policy.RequireRole(Constants.Roles.Administrator));
         options.AddPolicy(Constants.Policies.RequireManager, policy => policy.RequireRole(Constants.Roles.Clinician));
     });
