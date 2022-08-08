@@ -55,16 +55,18 @@
                 <h4 class="mb-3">Roles</h4>
 
                 <div class="my-3">
-                    
-                    @for (int i = 0; i < @Model.Roles.Count(); i++)
+                    @if (User.IsInRole("Administrator"))
                     {
-                        <div class="form-check">
-                            @Html.CheckBoxFor(c => @Model.Roles[i].Selected)
-                            @Html.HiddenFor(h => @Model.Roles[i].Value)
-                            
-                            @Html.LabelFor(l => @Model.Roles[i].Selected, @Model.Roles[i].Text, new {@class="form-check-label"})
-                            @Html.HiddenFor(h => @Model.Roles[i].Text)
-                        </div>
+                        @for (int i = 0; i < @Model.Roles.Count(); i++)
+                        {
+                            <div class="form-check">
+                                @Html.CheckBoxFor(c => @Model.Roles[i].Selected)
+                                @Html.HiddenFor(h => @Model.Roles[i].Value)
+
+                                @Html.LabelFor(l => @Model.Roles[i].Selected, @Model.Roles[i].Text, new {@class="form-check-label"})
+                                @Html.HiddenFor(h => @Model.Roles[i].Text)
+                            </div>
+                        }
                     }
                 </div>
 

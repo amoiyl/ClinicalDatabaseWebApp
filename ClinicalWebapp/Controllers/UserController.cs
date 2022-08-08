@@ -23,13 +23,17 @@ namespace ClinicalWebapp.Controllers
 
         public IActionResult Index()
         {
-            var users = _unitOfWork.User.GetUsers();
-            if (User.IsInRole("User"))
+            if (User.IsInRole("User") || User.IsInRole("Clinician")) 
             {
                 var user = _unitOfWork.User.GetUsers().Where(u => u.UserName.Contains(User.Identity.Name));
-               return View(user.ToList());
+                return View(user.ToList());
             }
-            return View(users);
+            else if (User.IsInRole("Administrator"))
+            {
+                var users = _unitOfWork.User.GetUsers();
+                return View(users);
+            }
+            return View();
         }
         public async Task<IActionResult> Edit(string id)
         {
@@ -71,34 +75,36 @@ namespace ClinicalWebapp.Controllers
 
             var rolesToAdd = new List<string>();
             var rolesToDelete = new List<string>();
-
-            foreach (var role in data.Roles)
+            if (User.IsInRole("Administrator"))
             {
-                var assignedInDb = userRolesInDb.FirstOrDefault(ur => ur == role.Text);
-                if (role.Selected)
+                foreach (var role in data.Roles)
                 {
-                    if (assignedInDb == null)
+                    var assignedInDb = userRolesInDb.FirstOrDefault(ur => ur == role.Text);
+                    if (role.Selected)
                     {
-                        rolesToAdd.Add(role.Text);
+                        if (assignedInDb == null)
+                        {
+                            rolesToAdd.Add(role.Text);
+                        }
+                    }
+                    else
+                    {
+                        if (assignedInDb != null)
+                        {
+                            rolesToDelete.Add(role.Text);
+                        }
                     }
                 }
-                else
+
+                if (rolesToAdd.Any())
                 {
-                    if (assignedInDb != null)
-                    {
-                        rolesToDelete.Add(role.Text);
-                    }
+                    await _signInManager.UserManager.AddToRolesAsync(user, rolesToAdd);
                 }
-            }
 
-            if (rolesToAdd.Any())
-            {
-                await _signInManager.UserManager.AddToRolesAsync(user, rolesToAdd);
-            }
-
-            if (rolesToDelete.Any())
-            {
-                await _signInManager.UserManager.RemoveFromRolesAsync(user, rolesToDelete);
+                if (rolesToDelete.Any())
+                {
+                    await _signInManager.UserManager.RemoveFromRolesAsync(user, rolesToDelete);
+                }
             }
 
             user.FirstName = data.User.FirstName;
