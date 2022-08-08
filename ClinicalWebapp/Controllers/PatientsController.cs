@@ -7,24 +7,35 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicalWebapp.Areas.Identity.Data;
 using ClinicalWebapp.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace ClinicalWebapp.Controllers
 {
     public class PatientsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PatientsController(ApplicationDbContext context)
+        public PatientsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Patients
         public async Task<IActionResult> Index()
         {
-              return _context.Patient != null ? 
-                          View(await _context.Patient.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Patient'  is null.");
+            if (User.IsInRole("Administrator"))
+            {
+                return _context.Patient != null ?
+                            View(await _context.Patient.ToListAsync()) :
+                            Problem("Entity set 'ApplicationDbContext.Patient'  is null.");
+            }
+            var user = _userManager.Users.Where(u => u.UserName.Equals(User.Identity.Name));
+            return _context.Patient != null ?
+                View(await _context.Patient
+                .Where(u => u.Name.Equals(user.First().FirstName)).ToListAsync()) :
+                Problem("null entity");
         }
 
         // GET: Patients/Details/5

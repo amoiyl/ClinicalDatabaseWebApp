@@ -9,6 +9,7 @@ namespace ClinicalWebapp.Migrations
         private string ManagerRoleId = Guid.NewGuid().ToString();
         private string UserRoleId = Guid.NewGuid().ToString();
         private string AdminRoleId = Guid.NewGuid().ToString();
+        private string AnalystRoleId = Guid.NewGuid().ToString();
 
         private string User1Id = Guid.NewGuid().ToString();
         private string User2Id = Guid.NewGuid().ToString();
@@ -30,29 +31,22 @@ namespace ClinicalWebapp.Migrations
             VALUES ('{ManagerRoleId}', 'Clinician', 'MANAGER', null);");
             migrationBuilder.Sql(@$"INSERT INTO [dbo].[AspNetRoles] ([Id],[Name],[NormalizedName],[ConcurrencyStamp])
             VALUES ('{UserRoleId}', 'User', 'USER', null);");
+            migrationBuilder.Sql(@$"INSERT INTO [dbo].[AspNetRoles] ([Id],[Name],[NormalizedName],[ConcurrencyStamp])
+            VALUES ('{AnalystRoleId}', 'Analyst', 'ANALYST', null);");
         }
 
         private void SeedUser(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(
-                @$"INSERT [dbo].[AspNetUsers] ([Id], [FirstName], [LastName], [UserName], [NormalizedUserName], 
-[Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], 
-[PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) 
-VALUES 
-(N'{User1Id}', N'Test 2', N'Lastname', N'test2@test.ca', N'TEST2@TEST.CA', 
-N'test2@test.ca', N'TEST2@TEST.CA', 0, 
-N'AQAAAAEAACcQAAAAEDGQ5wwj6Iz0lXHIZ5IwuvgSO88jrSBT1etWcDYjJN5CBNDKvddZcEeixYBYmcdFag==', 
-N'YUPAFWNGZI2UC5FOITC7PX5J7XZTAZAA', N'8e150555-a20d-4610-93ff-49c5af44f749', NULL, 0, 0, NULL, 1, 0)");
 
             migrationBuilder.Sql(
                 @$"INSERT [dbo].[AspNetUsers] ([Id], [FirstName], [LastName], [UserName], [NormalizedUserName], 
 [Email], [NormalizedEmail], [EmailConfirmed], [PasswordHash], [SecurityStamp], [ConcurrencyStamp], 
 [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEnd], [LockoutEnabled], [AccessFailedCount]) 
 VALUES 
-(N'{User2Id}', N'Test 3', N'Lastname', N'test3@test.ca', N'TEST3@TEST.CA', 
-N'test3@test.ca', N'TEST3@TEST.CA', 0, 
-N'AQAAAAEAACcQAAAAEDGQ5wwj6Iz0lXHIZ5IwuvgSO88jrSBT1etWcDYjJN5CBNDKvddZcEeixYBYmcdFag==', 
-N'YUPAFWNGZI2UC5FOITC7PX5J7XZTAZAA', N'8e150555-a20d-4610-93ff-49c5af44f749', NULL, 0, 0, NULL, 1, 0)");
+(N'{User2Id}', N'admin', N'admin', N'admin@gmail.com', N'ADMIN@GMAIL.COM', 
+N'admin@gmail.com', N'ADMIN@GMAIL.COM', 0, 
+N'AQAAAAEAACcQAAAAEAyVtAiE40R6yg/MzeJvRslpLjaBDp6yZAbCYs01ee1/xwVE2B9rwXxM/pZ7kMKEGg==', 
+N'YUPAFWNGZI2UC5FOITC7PX5J7XZTAZAA', N'ee42f2a1-1070-4b8c-ab3a-68576b54e548', NULL, 0, 0, NULL, 1, 0)");
         }
 
         private void SeedUserRoles(MigrationBuilder migrationBuilder)

@@ -24,6 +24,11 @@ namespace ClinicalWebapp.Controllers
         public IActionResult Index()
         {
             var users = _unitOfWork.User.GetUsers();
+            if (User.IsInRole("User"))
+            {
+                var user = _unitOfWork.User.GetUsers().Where(u => u.UserName.Contains(User.Identity.Name));
+               return View(user.ToList());
+            }
             return View(users);
         }
         public async Task<IActionResult> Edit(string id)

@@ -7,6 +7,7 @@
             public const string Administrator = "Administrator";
             public const string Clinician = "Clinician";
             public const string User = "User";
+            public const string Analyst = "Analyst";
         }
 
         public static class Policies
